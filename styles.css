@@ -1,0 +1,435 @@
+/* ============================================
+   CYBER-GOTHIC PERSONAL SITE STYLES
+   A minimal, dark, futuristic aesthetic
+   ============================================ */
+
+/* CSS Custom Properties (Variables) for easy customization */
+:root {
+    /* Color Palette */
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #0f0f0f;
+    --bg-tertiary: #141414;
+    --text-primary: #e8e8e8;
+    --text-secondary: #888888;
+    --text-muted: #555555;
+    --accent-glow: rgba(255, 255, 255, 0.15);
+    --accent-hover: rgba(255, 255, 255, 0.25);
+    --icon-color: #888888;
+    --icon-hover: #ffffff;
+    --glow-color: rgba(255, 255, 255, 0.4);
+    
+    /* Typography */
+    --font-main: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    --font-size-name: clamp(1.8rem, 5vw, 3rem);
+    --font-size-role: clamp(1rem, 3vw, 1.5rem);
+    --font-weight-light: 200;
+    --font-weight-normal: 300;
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 4rem;
+    
+    /* Animation Timing */
+    --transition-fast: 0.2s;
+    --transition-medium: 0.4s;
+    --transition-slow: 0.8s;
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    
+    /* Icon Sizes */
+    --icon-size: clamp(24px, 4vw, 32px);
+    --icon-spacing: clamp(1rem, 3vw, 2rem);
+}
+
+/* Reset and Base Styles */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Particle Canvas Background */
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    animation: canvasFadeIn 2s var(--ease-smooth) forwards;
+}
+
+@keyframes canvasFadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Main Container */
+.container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--spacing-md);
+    width: 100%;
+    max-width: 800px;
+}
+
+/* Hero Section - Name and Role */
+.hero {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroFadeIn 1.2s var(--ease-smooth) 0.5s forwards;
+}
+
+@keyframes heroFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.name-role {
+    font-weight: var(--font-weight-light);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    line-height: 1.4;
+}
+
+.name {
+    font-size: var(--font-size-name);
+    color: var(--text-primary);
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+.separator {
+    font-size: var(--font-size-name);
+    color: var(--text-muted);
+    font-weight: 100;
+    opacity: 0.5;
+}
+
+.role {
+    font-size: var(--font-size-role);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-normal);
+    letter-spacing: 0.4em;
+}
+
+/* Social Icons Navigation */
+.social-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--icon-spacing);
+    margin-top: var(--spacing-lg);
+    opacity: 0;
+    transform: translateY(15px);
+    animation: iconsFadeIn 1s var(--ease-smooth) 1s forwards;
+}
+
+@keyframes iconsFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    color: var(--icon-color);
+    text-decoration: none;
+    transition: 
+        color var(--transition-fast) var(--ease-smooth),
+        transform var(--transition-fast) var(--ease-smooth),
+        filter var(--transition-medium) var(--ease-smooth);
+    position: relative;
+}
+
+.social-icon svg {
+    width: 100%;
+    height: 100%;
+    transition: inherit;
+}
+
+/* Subtle glow effect on hover */
+.social-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(var(--icon-size) + 20px);
+    height: calc(var(--icon-size) + 20px);
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-medium) var(--ease-smooth);
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+.social-icon:hover {
+    color: var(--icon-hover);
+    transform: translateY(-2px);
+    filter: drop-shadow(0 0 8px var(--glow-color));
+}
+
+.social-icon:hover::before {
+    opacity: 1;
+}
+
+.social-icon:active {
+    transform: translateY(0) scale(0.95);
+}
+
+/* Focus styles for accessibility */
+.social-icon:focus {
+    outline: none;
+}
+
+.social-icon:focus-visible {
+    outline: 1px solid var(--text-muted);
+    outline-offset: 8px;
+    border-radius: 4px;
+}
+
+/* Music Toggle Button */
+.music-toggle {
+    position: fixed;
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+    width: 44px;
+    height: 44px;
+    background: var(--bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: var(--text-muted);
+    transition: 
+        color var(--transition-fast) var(--ease-smooth),
+        background var(--transition-fast) var(--ease-smooth),
+        border-color var(--transition-fast) var(--ease-smooth),
+        transform var(--transition-fast) var(--ease-smooth),
+        box-shadow var(--transition-medium) var(--ease-smooth);
+    z-index: 100;
+    opacity: 0;
+    animation: musicBtnFadeIn 0.8s var(--ease-smooth) 1.5s forwards;
+}
+
+@keyframes musicBtnFadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.music-toggle:hover {
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.music-toggle:active {
+    transform: scale(0.95);
+}
+
+.music-toggle:focus {
+    outline: none;
+}
+
+.music-toggle:focus-visible {
+    outline: 1px solid var(--text-muted);
+    outline-offset: 4px;
+}
+
+/* Music icon states */
+.music-icon {
+    width: 100%;
+    height: 100%;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.music-on {
+    display: none;
+}
+
+.music-off {
+    display: block;
+}
+
+/* When music is playing */
+.music-toggle.playing .music-on {
+    display: block;
+}
+
+.music-toggle.playing .music-off {
+    display: none;
+}
+
+.music-toggle.playing {
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.25);
+    animation: musicPulse 2s ease-in-out infinite;
+}
+
+@keyframes musicPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.1);
+    }
+    50% {
+        box-shadow: 0 0 15px 2px rgba(255, 255, 255, 0.15);
+    }
+}
+
+/* Responsive Design */
+
+/* Tablet and smaller */
+@media (max-width: 768px) {
+    :root {
+        --spacing-lg: 2rem;
+    }
+    
+    .name-role {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+    
+    .separator {
+        display: none;
+    }
+    
+    .role {
+        margin-top: var(--spacing-xs);
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    :root {
+        --spacing-md: 1.5rem;
+        --icon-spacing: 1.5rem;
+    }
+    
+    .music-toggle {
+        bottom: var(--spacing-sm);
+        right: var(--spacing-sm);
+        width: 40px;
+        height: 40px;
+    }
+    
+    .social-icons {
+        margin-top: var(--spacing-md);
+    }
+}
+
+/* Landscape mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    .container {
+        padding: var(--spacing-sm);
+    }
+    
+    .hero {
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .social-icons {
+        margin-top: var(--spacing-sm);
+    }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    #particle-canvas {
+        opacity: 0.3;
+    }
+    
+    .music-toggle.playing {
+        animation: none;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    :root {
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --text-muted: #999999;
+        --icon-color: #cccccc;
+    }
+    
+    .social-icon:focus-visible {
+        outline-width: 2px;
+    }
+}
+
+/* Dark mode is default, but handle light mode preference if needed */
+@media (prefers-color-scheme: light) {
+    /* Keep dark theme regardless - this is intentional for the cyber-gothic aesthetic */
+}
+
+/* Print styles - hide decorative elements */
+@media print {
+    #particle-canvas,
+    .music-toggle {
+        display: none !important;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .name, .role {
+        color: black;
+    }
+}
